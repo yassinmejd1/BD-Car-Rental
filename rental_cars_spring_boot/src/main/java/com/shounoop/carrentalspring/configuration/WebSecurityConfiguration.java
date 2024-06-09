@@ -34,6 +34,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
+                        .requestMatchers("/api/statistics/**").hasAnyAuthority(UserRole.ADMIN.name())
                         .requestMatchers("/api/customer/**").hasAnyAuthority(UserRole.CUSTOMER.name())
                         .requestMatchers("/stripe/webhook").permitAll()
                         .anyRequest().authenticated()).sessionManagement

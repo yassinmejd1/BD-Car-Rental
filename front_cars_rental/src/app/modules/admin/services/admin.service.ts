@@ -67,6 +67,18 @@ export class AdminService {
       headers: this.createAuthorizationHeader()
     });
   }
+  
+    getUserStatistics(): Observable<any> {
+    return this.http.get(`${BASIC_URL}/api/statistics/users`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
+  getBookingStatistics(): Observable<any> {
+    return this.http.get(`${BASIC_URL}/api/statistics/bookings`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
 
   private createAuthorizationHeader(): HttpHeaders {
     let authHeaders: HttpHeaders = new HttpHeaders();

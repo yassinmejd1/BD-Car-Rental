@@ -12,7 +12,7 @@ import { NgZorroImportsModule } from './NgZorroImportsModule';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
+import zh from '@angular/common/locales/zh'; 
 
 registerLocaleData(zh);
 

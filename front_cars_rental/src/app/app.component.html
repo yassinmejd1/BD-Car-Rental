@@ -15,11 +15,12 @@
 <div *ngIf="isAdminLoggedIn">
   <div class="custom-navbar">
     <div class="navbar-title">
-      <a routerLink="/login">LoggedIn Admin</a>
+      <a routerLink="/admin/statistics">LoggedIn Admin</a>
     </div>
 
     <div class="nav-links">
       <a routerLink="/admin/dashboard" routerLinkActive="active"> Dashboard </a>
+      <a routerLink="/admin/statistics" routerLinkActive="active"> Statistics </a>
       <a routerLink="/admin/car" routerLinkActive="active"> Post Car </a>
       <a routerLink="/admin/bookings" routerLinkActive="active"> Bookings </a>
       <a routerLink="/admin/search" routerLinkActive="active"> Search </a>
@@ -32,7 +33,7 @@
 <div *ngIf="isCustomerLoggedIn">
   <div class="custom-navbar">
     <div class="navbar-title">
-      <a routerLink="/login">LoggedIn Customer</a>
+      <a routerLink="/customer/dashboard">LoggedIn Customer</a>
     </div>
 
     <div class="nav-links">
