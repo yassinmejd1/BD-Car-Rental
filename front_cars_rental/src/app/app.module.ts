@@ -13,11 +13,12 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { UserProfileComponent } from './modules/customer/components/user-profile/user-profile.component';
 
 registerLocaleData(zh);
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, UserProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

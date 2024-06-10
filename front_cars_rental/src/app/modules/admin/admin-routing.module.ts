@@ -5,13 +5,15 @@ import { PostCarComponent } from './components/post-car/post-car.component'
 import { UpdateCarComponent } from './components/update-car/update-car.component'
 import { GetBookingsComponent } from './components/get-bookings/get-bookings.component'
 import { SearchCarComponent } from './components/search-car/search-car.component'
+import { UserProfileComponent } from '../customer/components/user-profile/user-profile.component'
 
 const routes: Routes = [
   { path: 'dashboard', component: AdminDashboardComponent },
   { path: 'car', component: PostCarComponent },
   { path: 'car/:id', component: UpdateCarComponent },
   { path: 'bookings', component: GetBookingsComponent },
-  { path: 'search', component: SearchCarComponent }
+  { path: 'search', component: SearchCarComponent },
+  { path: 'profile', component: UserProfileComponent }
 ]
 
 @NgModule({
