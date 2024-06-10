@@ -30,11 +30,12 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
-                        .requestMatchers("/api/customer/**").hasAnyAuthority(UserRole.CUSTOMER.name())
+                        .requestMatchers("/api/admin/**").permitAll()
+                        .requestMatchers("/api/customer/**").permitAll()
                         .requestMatchers("/stripe/webhook").permitAll()
                         .anyRequest().authenticated()).sessionManagement
                         (management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -60,5 +61,7 @@ public class WebSecurityConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+
 
 }

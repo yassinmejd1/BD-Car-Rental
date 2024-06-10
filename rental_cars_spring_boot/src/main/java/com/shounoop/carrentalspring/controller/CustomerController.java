@@ -2,16 +2,16 @@ package com.shounoop.carrentalspring.controller;
 
 import com.shounoop.carrentalspring.dto.BookACarDto;
 import com.shounoop.carrentalspring.dto.CarDto;
+import com.shounoop.carrentalspring.dto.ChangePasswordDto;
+import com.shounoop.carrentalspring.entity.User;
 import com.shounoop.carrentalspring.services.customer.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collections;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -19,6 +19,37 @@ import java.util.Collections;
 public class CustomerController {
     private final CustomerService customerService;
 
+    @GetMapping("/{customerId}")
+    public ResponseEntity<Optional<User>> getCustomerProfile(@PathVariable Long customerId) throws IOException {
+        System.out.println("customerId               :"+customerId);
+            Optional<User> customer = customerService.getCustomerById(customerId);
+
+            if (customer.isPresent()) {
+                return ResponseEntity.ok(customer);
+            }
+                return ResponseEntity.notFound().build(); // Return 404 status with empty body
+
+
+    }
+    @PutMapping("/profile")
+    public ResponseEntity<?> updateUserProfile(@RequestBody User userProfileDto) {
+        try {
+            customerService.updateUserProfile(userProfileDto);
+            return ResponseEntity.ok("Profile updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update profile: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto  changePasswordDto) {
+        try {
+            customerService.changePassword(changePasswordDto);
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to change password: " + e.getMessage());
+        }
+    }
     @GetMapping("/cars")
     public ResponseEntity<List<CarDto>> getAllCars() {
         return ResponseEntity.ok(customerService.getAllCars());

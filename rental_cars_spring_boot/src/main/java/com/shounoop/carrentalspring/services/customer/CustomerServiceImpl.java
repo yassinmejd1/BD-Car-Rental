@@ -2,6 +2,7 @@ package com.shounoop.carrentalspring.services.customer;
 
 import com.shounoop.carrentalspring.dto.BookACarDto;
 import com.shounoop.carrentalspring.dto.CarDto;
+import com.shounoop.carrentalspring.dto.ChangePasswordDto;
 import com.shounoop.carrentalspring.entity.BookACar;
 import com.shounoop.carrentalspring.entity.Car;
 import com.shounoop.carrentalspring.entity.User;
@@ -13,6 +14,7 @@ import com.shounoop.carrentalspring.services.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -28,6 +30,47 @@ public class CustomerServiceImpl implements CustomerService {
     private final UserRepository userRepository;
     private final BookACarRepository bookACarRepository;
     private final StripeService stripeService;
+
+    private PasswordEncoder passwordEncoder;
+    @Override
+    public Optional<User> getCustomerById(Long customerId) {
+        return userRepository.findById(customerId);
+    }
+
+
+    @Override
+    public void updateUserProfile(User userProfileDto) {
+        Optional<User> optionalUser = userRepository.findById(userProfileDto.getId());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setName(userProfileDto.getName());
+            user.setEmail(userProfileDto.getEmail());
+            // Update other fields as necessary
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+    @Override
+    public void changePassword(ChangePasswordDto changePasswordDto) {
+        Optional<User> optionalUser = userRepository.findById(changePasswordDto.getUserId());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(changePasswordDto.getCurrentPassword(), user.getPassword())) {
+                // Encode the new password
+                String encodedNewPassword = passwordEncoder.encode(changePasswordDto.getNewPassword());
+                user.setPassword(encodedNewPassword);
+                userRepository.save(user);
+            } else {
+                throw new RuntimeException("Current password is incorrect");
+            }
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+
 
     @Override
     public List<CarDto> getAllCars() {
